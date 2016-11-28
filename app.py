@@ -26,7 +26,7 @@ def get_tarjetas():
             "done": t['done']
         }
         output.append(tarjeta)
-    return jsonify({'tarjetas': [make_public(tarjeta) for tarjeta in output]})
+    return jsonify([make_public(tarjeta) for tarjeta in output])
 
 
 @app.route('/kanban/api/tarjetas/<int:tarjeta_id>', methods=['GET'])
