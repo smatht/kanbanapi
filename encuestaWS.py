@@ -17,7 +17,7 @@ preguntas = [
 @app.route('/encuesta/api/preguntas', methods=['GET'])
 def get_preguntas():
     output = []
-    for t in mydb.questions.find():
+    for t in mydb.questions.find().sort("id"):
         pregunta = {
             "id": t['id'],
             "question": t['question'],
