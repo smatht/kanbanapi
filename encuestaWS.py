@@ -2,6 +2,7 @@
 from flask import Flask, jsonify, abort, make_response, request, url_for
 import datetime
 from pymongo import MongoClient
+import pymongo
 
 app = Flask(__name__)
 
@@ -25,6 +26,24 @@ def get_preguntas():
         }
         output.append(pregunta)
     return jsonify({'questions': output})
+
+
+@app.route('/encuesta/api/encuestas', methods=['GET'])
+def get_encuestas():
+    output = []
+    for t in mydb.quiz.find().sort("id", pymongo.DESCENDING):
+        encuesta = {
+            "id": t['id'],
+            "nombre_encuestador": t['nombre_encuestador'],
+            "mail_encuestador": t['mail_encuestador'],
+            "nombre_encuestado": t['nombre_encuestado'],
+            "ciudad": t['ciudad'],
+            "sexo": t['sexo'],
+            "edad": t['edad'],
+            "respuestas":t['respuestas']
+        }
+        output.append(encuesta)
+    return jsonify({'quiz': output})
 
 
 # @app.route('/kanban/api/tarjetas/<int:tarjeta_id>', methods=['GET'])
